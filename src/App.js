@@ -1,26 +1,59 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class AddTask extends React.Component {
+  render() {
+    return (
+      <button onClick = {() => this.props.onClick()}>Add Task</button>
+    );
+  }
 }
 
+class Task extends React.Component {
+  render() {
+    const checkbox = (
+      <div>
+        <input type = "checkbox"/> {this.props.value}
+        <button>X</button>
+      </div>
+    )
+    return checkbox;
+  }
+}
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      taskList : ["something", "nothing"],
+      taskStatus: [false]
+    }
+  }
+
+  handleAddTask() {
+    const taskDescription = prompt("Enter your Task Description");
+    const taskList = this.state.taskList.slice();
+    const taskStatus = this.state.taskStatus.slice();
+    taskList.push(taskDescription);
+    taskStatus.push(false);
+    this.setState({
+      taskList: taskList,
+      taskStatus: taskStatus
+    })
+  }
+
+  render() {
+    return (
+      <div className = "App">
+        <center><h1>To-Do App</h1></center>
+        {
+          this.state.taskList.map(task => (
+            <Task value = {task}/>
+          ))
+        }
+        <AddTask onClick = {() => this.handleAddTask()}/>
+      </div>
+    );
+  }
+}
 export default App;
