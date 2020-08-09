@@ -11,9 +11,10 @@ class AddTask extends React.Component {
 
 class Task extends React.Component {
   render() {
+    const className = this.props.value.completed ? "complete" : "incomplete";
     const checkbox = (
-      <div>
-        <input type = "checkbox"/> {this.props.value.description}
+      <div class = {className}>
+        <input type = "checkbox" onChange = {() => this.props.onCheckClick(this.props.value)}/> {this.props.value.description}
         <button onClick = {() => this.props.onRemoveClick(this.props.value)}>X</button>
       </div>
     )
@@ -41,10 +42,19 @@ class App extends React.Component {
   }
 
   handleRemoveTask(task) {
-    alert(task.description);
     const tasks = this.state.tasks.slice();
     const index = tasks.indexOf(task);
     tasks.splice(index, 1);
+    this.setState({
+      tasks: tasks,
+      currentId: this.currentId
+    })
+  }
+
+  handleCheckClick(task) {
+    const tasks = this.state.tasks.slice();
+    const index = tasks.indexOf(task);
+    tasks[index].completed = !tasks[index].completed;
     this.setState({
       tasks: tasks,
       currentId: this.currentId
@@ -57,7 +67,7 @@ class App extends React.Component {
         <center><h1>To-Do App</h1></center>
         {
           this.state.tasks.map(task => (
-            <Task value = {task} onRemoveClick = {() => this.handleRemoveTask(task)}/>
+            <Task value = {task} onRemoveClick = {() => this.handleRemoveTask(task)} onCheckClick = {() => this.handleCheckClick(task)}/>
           ))
         }
         <AddTask onClick = {() => this.handleAddTask()}/>
