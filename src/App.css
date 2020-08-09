@@ -39,8 +39,18 @@
 
 .complete{
   background-color: green;
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-bottom: 2px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .incomplete{
   background-color: red;
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-bottom: 2px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
