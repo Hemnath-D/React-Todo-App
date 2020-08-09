@@ -25,20 +25,16 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      taskList : ["something", "nothing"],
-      taskStatus: [false]
+      tasks : [{"description": "something","completed": false}],
     }
   }
 
   handleAddTask() {
     const taskDescription = prompt("Enter your Task Description");
-    const taskList = this.state.taskList.slice();
-    const taskStatus = this.state.taskStatus.slice();
-    taskList.push(taskDescription);
-    taskStatus.push(false);
+    const tasks = this.state.tasks.slice();
+    tasks.push({"description": taskDescription, "completed": false});
     this.setState({
-      taskList: taskList,
-      taskStatus: taskStatus
+      tasks: tasks
     })
   }
 
@@ -47,8 +43,8 @@ class App extends React.Component {
       <div className = "App">
         <center><h1>To-Do App</h1></center>
         {
-          this.state.taskList.map(task => (
-            <Task value = {task}/>
+          this.state.tasks.map(task => (
+            <Task value = {task.description}/>
           ))
         }
         <AddTask onClick = {() => this.handleAddTask()}/>
